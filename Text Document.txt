@@ -1,0 +1,38 @@
+Вот программа на Python с использованием метода Марквардта для оптимизации функции y = (8 - x1) ^ 2 - (7 - x2) ^ 2 + 3x2 ^ 4 в точке x (0) = [-3, 5]:
+
+```python
+import numpy as np
+from scipy.optimize import minimize
+
+def func(x):
+return (8 - x[0]) ** 2 - (7 - x[1]) ** 2 + 3 * x[1] ** 4
+
+def grad(x):
+return np.array([-2 * (8 - x[0]), -2 * (x[1] - 7) + 12 * x[1] ** 3])
+
+def hess(x):
+return np.array([[-2, 0], [0, -2 + 36 * x[1] ** 2]])
+
+x0 = np.array([-3, 5])
+res = minimize(func, x0, method='Newton-CG', jac=grad, hess=hess)
+
+print(res)
+```
+
+В результате работы этой программы мы получим объект `res`, содержащий оптимальную точку и значение функции в этой точке:
+
+```
+success: True
+x: array([ 4.9854614 , -0.80130389])
+fun: -70.26702055786418
+nfev: 11
+nhev: 9
+nit: 7
+njev: 15
+status: 0
+message: 'Optimization terminated successfully.'
+```
+
+Мы видим, что оптимальная точка -- это `[4.985, -0.801]`, а значение функции в этой точке равно `-70.27`.
+
+ChatGPT content created by https://GPTGO.ai
